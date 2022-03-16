@@ -7,7 +7,7 @@ const userSchema = Schema(
   {
     name: {
       type: String,
-      required: [true, 'name is required'],
+      required: [true, 'Name is required'],
     },
     password: {
       type: String,
@@ -37,7 +37,6 @@ const joiSchema = Joi.object({
   name: Joi.string().min(2).max(30),
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
-  role: Joi.string(),
 })
 
 const User = model('user', userSchema)
