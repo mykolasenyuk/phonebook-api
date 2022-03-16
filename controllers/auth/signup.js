@@ -1,5 +1,7 @@
 const { User } = require('../../models')
 const { Conflict } = require('http-errors')
+const jwt = require('jsonwebtoken')
+const { v4 } = require('uuid')
 
 const signup = async (req, res, next) => {
   try {
@@ -10,11 +12,20 @@ const signup = async (req, res, next) => {
     if (user) {
       throw new Conflict('Already register')
     }
+    const verificationToken = v4()
+    const payload = {
+      verificationToken,
+    }
+    const { SECRET_KEY } = process.env
+
+    const token = jwt.sign(payload, SECRET_KEY)
 
     const newUser = new User({
       name,
       email,
+      token,
     })
+    console.log(newUser)
     newUser.setPassword(password)
     await newUser.save()
 
@@ -22,7 +33,11 @@ const signup = async (req, res, next) => {
       status: 'success',
       code: 201,
       message: ' Success register',
-      newUser,
+      user: {
+        name: newUser.name,
+        email: newUser.email,
+      },
+      token: newUser.token,
     })
   } catch (error) {
     res.status(409).json(error.message)
