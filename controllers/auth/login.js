@@ -7,7 +7,7 @@ const login = async (req, res) => {
     const { email, password } = req.body
 
     const user = await User.findOne({ email })
-
+    // console.log(user)
     if (!user || !user.comparePassword(password)) {
       throw new NotFound('Email or password is wrong')
     }
@@ -19,17 +19,18 @@ const login = async (req, res) => {
     const { SECRET_KEY } = process.env
 
     const token = jwt.sign(payload, SECRET_KEY)
+    // console.log(token)
 
-    await User.findByIdAndUpdate(user._id, { token })
+    const updUser = await User.findByIdAndUpdate(user._id, { token })
 
     res.json({
       status: '✔️ Success',
       code: 201,
       user: {
-        name: user.name,
-        email: user.email,
+        name: updUser.name,
+        email: updUser.email,
       },
-      token: user.token,
+      token,
     })
   } catch (error) {
     res.status(400).json(error)

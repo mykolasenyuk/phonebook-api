@@ -8,5 +8,7 @@ const userValidation = validation(joiSchema)
 
 router.post('/signup', userValidation, ctrl.signup)
 router.post('/login', userValidation, ctrl.login)
+router.post('/logout', authenticate, ctrl.logout)
+router.get('/current', authenticate, ctrl.current)
 
 module.exports = router
