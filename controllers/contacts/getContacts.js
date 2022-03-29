@@ -2,7 +2,7 @@ const { Contact } = require('../../models')
 
 const getAllContacts = async (req, res, next) => {
   try {
-    const { limit = 5, page = 1, favorite = null } = req.query
+    const { limit = 20, page = 1, favorite = null } = req.query
     const { _id } = req.user
     const optionSearch = { owner: _id }
     if (favorite !== null) {
