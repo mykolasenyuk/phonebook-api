@@ -9,4 +9,6 @@ const contactValidation = validation(joiSchema)
 
 router.get('/', authenticate, ctrl.getAllcontacts)
 router.post('/', authenticate, contactValidation, ctrl.addContact)
+router.delete('/:contactId', authenticate, ctrl.deleteContact)
+
 module.exports = router
