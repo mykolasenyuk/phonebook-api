@@ -2,20 +2,20 @@ const { Schema, model, SchemaTypes } = require('mongoose')
 const Joi = require('joi')
 const mongoosePaginate = require('mongoose-paginate-v2')
 
-const phoneRegexp = /^\+?\(?[0-9]{1,4}\)?[-.\s]?[0-9]{1,3}[-.\s]?[0-9]{1,4}$/
-const emailRegexp = /^[a-zA-Z0-9]+[a-zA-Z0-9_.-]+[a-zA-Z0-9_-]+@[a-zA-Z0-9]+[a-zA-Z0-9.-]+.[a-z]{2,4}$/
+const phoneRegexp = /^\+?\(?[0-9]{1,4}\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}$/
+// const emailRegexp = /^[a-zA-Z0-9]+[a-zA-Z0-9_.-]+[a-zA-Z0-9_-]+@[a-zA-Z0-9]+[a-zA-Z0-9.-]+.[a-z]{2,4}$/
 const contactSchema = Schema(
   {
     name: {
       type: String,
       required: [true, 'name is required'],
     },
-    email: {
-      type: String,
+    // email: {
+    //   type: String,
 
-      unique: true,
-      match: emailRegexp,
-    },
+    //   unique: true,
+    //   match: emailRegexp,
+    // },
     phone: {
       type: String,
       required: [true, 'phone is required'],
@@ -36,7 +36,7 @@ const contactSchema = Schema(
 
 const joiSchema = Joi.object({
   name: Joi.string().min(3).max(30),
-  email: Joi.string().pattern(emailRegexp),
+  // email: Joi.string().pattern(emailRegexp),
   phone: Joi.string().pattern(phoneRegexp),
   favorite: Joi.boolean(),
 })

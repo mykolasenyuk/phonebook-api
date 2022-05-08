@@ -5,6 +5,7 @@ const addContact = async (req, res, next) => {
     const newContact = { ...req.body, owner: req.user._id }
     // console.log(newContact)
     const result = await Contact.create(newContact)
+    console.log(result)
     res.status(201).json({
       status: 'sucess',
       code: 201,

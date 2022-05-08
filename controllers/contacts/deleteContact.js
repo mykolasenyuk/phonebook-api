@@ -4,7 +4,7 @@ const deleteContact = async (req, res, next) => {
   try {
     const { contactId } = req.params
     const contact = { contactId, owner: req.user._id }
-    // console.log(contact)
+    console.log(contactId)
     const result = await Contact.findByIdAndDelete(contact.contactId)
     if (!result) {
       res.status(404).json({
@@ -18,6 +18,7 @@ const deleteContact = async (req, res, next) => {
       status: 'success',
       code: 200,
       message: ' ✔️ Contact deleted',
+      contactId,
     })
   } catch (error) {
     next(error)
